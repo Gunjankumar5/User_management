@@ -1,0 +1,170 @@
+.tableWrap {
+  background: var(--color-surface);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-lg);
+  box-shadow: var(--shadow-sm);
+  overflow: hidden;
+}
+
+.header {
+  padding: 20px 24px 16px;
+  border-bottom: 1px solid var(--color-border);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.title {
+  font-size: 16px;
+  font-weight: 600;
+  color: var(--color-text-primary);
+}
+
+.count {
+  font-size: 13px;
+  color: var(--color-text-muted);
+  margin-top: 2px;
+  display: block;
+}
+
+/* Desktop table */
+.overflow {
+  overflow-x: auto;
+}
+
+.table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.th {
+  padding: 10px 16px;
+  text-align: left;
+  font-size: 12px;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  color: var(--color-text-muted);
+  background: var(--color-surface-alt);
+  border-bottom: 1px solid var(--color-border);
+  white-space: nowrap;
+}
+
+/* Mobile cards — hidden on desktop */
+.cardList { display: none; }
+
+@media (max-width: 768px) {
+  .overflow { display: none; }
+  .cardList  { display: flex; flex-direction: column; gap: 10px; padding: 16px; }
+  .header    { padding: 16px; }
+}
+
+.card {
+  background: var(--color-surface);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-md);
+  padding: 14px;
+  cursor: pointer;
+  transition: box-shadow var(--transition), transform var(--transition);
+}
+
+.card:hover {
+  box-shadow: var(--shadow-md);
+  transform: translateY(-1px);
+}
+
+.cardTop {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-bottom: 10px;
+}
+
+.cardAvatar {
+  width: 42px;
+  height: 42px;
+  border-radius: 50%;
+  color: #fff;
+  font-size: 15px;
+  font-weight: 600;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+
+.cardName { font-size: 15px; font-weight: 600; color: var(--color-text-primary); }
+.cardSub  { font-size: 13px; color: var(--color-text-muted); margin-top: 1px; }
+
+.cardMeta {
+  display: flex;
+  justify-content: space-between;
+  font-size: 13px;
+  color: var(--color-text-secondary);
+  margin-bottom: 12px;
+}
+
+.cardCompany {
+  font-size: 12px;
+  font-weight: 500;
+  color: var(--color-primary-text);
+  background: var(--color-primary-light);
+  padding: 2px 8px;
+  border-radius: 20px;
+}
+
+.cardActions {
+  display: flex;
+  gap: 8px;
+}
+
+.cardEdit, .cardDelete {
+  flex: 1;
+  padding: 8px;
+  border-radius: var(--radius-sm);
+  font-size: 13px;
+  font-weight: 500;
+  border: 1px solid var(--color-border);
+  cursor: pointer;
+  transition: background var(--transition), color var(--transition);
+}
+
+.cardEdit { background: var(--color-surface-alt); color: var(--color-text-secondary); }
+.cardEdit:hover { background: var(--color-primary-light); color: var(--color-primary); border-color: var(--color-primary); }
+.cardDelete { background: var(--color-surface-alt); color: var(--color-text-secondary); }
+.cardDelete:hover { background: var(--color-danger-light); color: var(--color-danger); border-color: var(--color-danger); }
+
+.cardSkeleton {
+  height: 110px;
+  border-radius: var(--radius-md);
+  background: linear-gradient(90deg, var(--color-border) 25%, var(--color-surface-alt) 50%, var(--color-border) 75%);
+  background-size: 700px 100%;
+  animation: shimmer 1.4s infinite;
+}
+
+.mobileEmpty {
+  text-align: center;
+  padding: 40px 16px;
+  color: var(--color-text-muted);
+  font-size: 14px;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  align-items: center;
+}
+
+.addCta {
+  padding: 9px 20px;
+  border-radius: var(--radius-sm);
+  background: var(--color-primary);
+  color: #fff;
+  font-size: 14px;
+  font-weight: 500;
+  border: none;
+  cursor: pointer;
+}
+
+@keyframes shimmer {
+  0%   { background-position: -700px 0; }
+  100% { background-position: 700px 0; }
+}
