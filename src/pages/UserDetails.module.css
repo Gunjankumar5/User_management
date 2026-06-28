@@ -108,6 +108,7 @@
 .heroRight { flex-shrink: 0; }
 
 .contactBtn {
+  border: 0;
   display: flex;
   align-items: center;
   gap: 7px;
@@ -196,6 +197,19 @@
 }
 
 .link:hover { text-decoration: underline; }
+
+.linkButton {
+  padding: 0;
+  border: 0;
+  background: transparent;
+  color: var(--color-primary);
+  font: inherit;
+  cursor: pointer;
+}
+
+.linkButton:hover {
+  text-decoration: underline;
+}
 
 /* Loader/error states */
 .loaderWrap {

@@ -11,6 +11,11 @@ import { formatWebsite } from '../utils/helpers';
 import { APP_NAME } from '../utils/constants';
 import styles from './UserDetails.module.css';
 
+function openMailClient(email) {
+  if (!email) return;
+  window.location.href = `mailto:${email}`;
+}
+
 function UserDetails() {
   const { id }       = useParams();
   const navigate     = useNavigate();
@@ -69,16 +74,16 @@ function UserDetails() {
               </div>
             </div>
             <div className={styles.heroRight}>
-              <a href={`mailto:${user.email}`} className={styles.contactBtn}>
+              <button type="button" className={styles.contactBtn} onClick={() => openMailClient(user.email)}>
                 <FiMail size={15} /> Send email
-              </a>
+              </button>
             </div>
           </div>
 
           {/* Detail cards */}
           <div className={styles.grid}>
             <InfoCard title="Contact" icon={FiMail}>
-              <DetailRow icon={FiMail}  label="Email"   value={<a href={`mailto:${user.email}`} className={styles.link}>{user.email}</a>} />
+              <DetailRow icon={FiMail}  label="Email"   value={<button type="button" className={styles.linkButton} onClick={() => openMailClient(user.email)}>{user.email}</button>} />
               <DetailRow icon={FiPhone} label="Phone"   value={user.phone || 'Not provided'} />
               <DetailRow icon={FiGlobe} label="Website" value={
                 website ? (
