@@ -1,6 +1,6 @@
 export const APP_NAME = 'UserBase';
 export const APP_VERSION = 'v1.0.0';
-export const DEVELOPER = 'Built with React + JSONPlaceholder';
+export const DEVELOPER = 'Built with React + persistent client-side data';
 
 export const TOAST_OPTIONS = {
   position: 'top-right',

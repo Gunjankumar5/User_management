@@ -7,6 +7,9 @@ import styles from './UserRow.module.css';
 
 function UserRow({ user, onEdit, onDelete }) {
   const navigate = useNavigate();
+  const username = user.username ? `@${user.username}` : 'Not provided';
+  const companyName = user.company?.name || 'Not provided';
+  const phone = user.phone || 'Not provided';
 
   const handleEdit = useCallback((e) => {
     e.stopPropagation();
@@ -29,7 +32,7 @@ function UserRow({ user, onEdit, onDelete }) {
       </td>
       <td className={styles.cell}>
         <span className={styles.name}>{user.name}</span>
-        <span className={styles.username}>@{user.username}</span>
+        <span className={styles.username}>{username}</span>
       </td>
       <td className={styles.cell}>
         <a href={`mailto:${user.email}`} className={styles.link} onClick={e => e.stopPropagation()}>
@@ -37,10 +40,10 @@ function UserRow({ user, onEdit, onDelete }) {
         </a>
       </td>
       <td className={styles.cell}>
-        <span className={styles.text}>{user.phone}</span>
+        <span className={styles.text}>{phone}</span>
       </td>
       <td className={styles.cell}>
-        <span className={styles.badge}>{user.company?.name}</span>
+        <span className={styles.badge}>{companyName}</span>
       </td>
       <td className={styles.cell}>
         <div className={styles.actions}>

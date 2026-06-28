@@ -34,6 +34,15 @@ function UserDetails() {
   if (loading) return <DetailsLoader />;
   if (error)   return <DetailsError message={error} onBack={() => navigate('/')} />;
 
+  const username = user.username ? `@${user.username}` : 'Not provided';
+  const companyName = user.company?.name || 'Not provided';
+  const catchPhrase = user.company?.catchPhrase || 'Not provided';
+  const business = user.company?.bs || 'Not provided';
+  const street = [user.address?.street, user.address?.suite].filter(Boolean).join(', ') || 'Not provided';
+  const city = [user.address?.city, user.address?.zipcode].filter(Boolean).join(', ') || 'Not provided';
+  const geo = [user.address?.geo?.lat, user.address?.geo?.lng].filter(Boolean).join(', ') || 'Not provided';
+  const website = user.website ? formatWebsite(user.website) : '';
+
   return (
     <div className={styles.layout}>
       {/* Minimal nav */}
@@ -55,8 +64,8 @@ function UserDetails() {
               <Avatar name={user.name} size={76} />
               <div>
                 <h1 className={styles.name}>{user.name}</h1>
-                <p className={styles.username}>@{user.username}</p>
-                <span className={styles.companyBadge}>{user.company?.name}</span>
+                <p className={styles.username}>{username}</p>
+                <span className={styles.companyBadge}>{companyName}</span>
               </div>
             </div>
             <div className={styles.heroRight}>
@@ -70,29 +79,33 @@ function UserDetails() {
           <div className={styles.grid}>
             <InfoCard title="Contact" icon={FiMail}>
               <DetailRow icon={FiMail}  label="Email"   value={<a href={`mailto:${user.email}`} className={styles.link}>{user.email}</a>} />
-              <DetailRow icon={FiPhone} label="Phone"   value={user.phone} />
+              <DetailRow icon={FiPhone} label="Phone"   value={user.phone || 'Not provided'} />
               <DetailRow icon={FiGlobe} label="Website" value={
-                <a href={`https://${formatWebsite(user.website)}`} target="_blank" rel="noreferrer" className={styles.link}>
-                  {formatWebsite(user.website)}
-                </a>
+                website ? (
+                  <a href={`https://${website}`} target="_blank" rel="noreferrer" className={styles.link}>
+                    {website}
+                  </a>
+                ) : (
+                  'Not provided'
+                )
               } />
             </InfoCard>
 
             <InfoCard title="Company" icon={FiBriefcase}>
-              <DetailRow icon={FiBriefcase} label="Name"        value={user.company?.name} />
-              <DetailRow icon={FiUser}      label="Catchphrase" value={user.company?.catchPhrase} />
-              <DetailRow icon={FiBriefcase} label="Business"    value={user.company?.bs} />
+              <DetailRow icon={FiBriefcase} label="Name"        value={companyName} />
+              <DetailRow icon={FiUser}      label="Catchphrase" value={catchPhrase} />
+              <DetailRow icon={FiBriefcase} label="Business"    value={business} />
             </InfoCard>
 
             <InfoCard title="Address" icon={FiMapPin}>
-              <DetailRow icon={FiMapPin} label="Street"  value={`${user.address?.street}, ${user.address?.suite}`} />
-              <DetailRow icon={FiMapPin} label="City"    value={`${user.address?.city}, ${user.address?.zipcode}`} />
-              <DetailRow icon={FiGlobe} label="Geo"      value={`${user.address?.geo?.lat}, ${user.address?.geo?.lng}`} />
+              <DetailRow icon={FiMapPin} label="Street"  value={street} />
+              <DetailRow icon={FiMapPin} label="City"    value={city} />
+              <DetailRow icon={FiGlobe} label="Geo"      value={geo} />
             </InfoCard>
 
             <InfoCard title="Account" icon={FiUser}>
               <DetailRow icon={FiUser}  label="User ID"  value={`#${user.id}`} />
-              <DetailRow icon={FiUser}  label="Username" value={`@${user.username}`} />
+              <DetailRow icon={FiUser}  label="Username" value={username} />
             </InfoCard>
           </div>
         </div>

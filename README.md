@@ -1,14 +1,14 @@
 # UserBase — User Management Application
 
-A production-ready CRUD User Management dashboard built with React + Vite and the JSONPlaceholder API.
+A production-ready CRUD User Management dashboard built with React + Vite and a persistent client-side user store.
 
 ## Features
-- Full CRUD (Create, Read, Update, Delete) with JSONPlaceholder API
+- Full CRUD (Create, Read, Update, Delete) with persistent client-side storage
 - Modern SaaS dashboard UI with statistics cards
 - Instant client-side search (name, email, company)
 - Skeleton loaders for loading states
 - Toast notifications for every action (React Toastify)
-- Optimistic updates with automatic rollback on failure
+- Responsive form flows for creating, editing, and deleting users
 - Professional delete confirmation modal
 - User details profile page
 - React Router with /, /users/:id, and 404 route
@@ -23,7 +23,7 @@ A production-ready CRUD User Management dashboard built with React + Vite and th
 - React Icons (Feather set)
 - CSS Modules
 
-API: https://jsonplaceholder.typicode.com/users
+Data source: remote JSONPlaceholder seed on first load, then local browser storage for ongoing changes
 
 ## Getting Started
 

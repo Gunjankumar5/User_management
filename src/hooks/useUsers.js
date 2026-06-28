@@ -17,7 +17,7 @@ export function useUsers() {
       .then(data => {
         if (!cancelled) setUsers(data);
       })
-      .catch(err => {
+      .catch(() => {
         if (!cancelled) {
           setError('Failed to load users. Please check your connection.');
           toast.error('Could not fetch users.');
@@ -41,84 +41,40 @@ export function useUsers() {
   }, [users, searchQuery]);
 
   const addUser = useCallback(async (userData) => {
-    const tempId = Date.now();
-    const optimistic = { ...userData, id: tempId, _pending: true, _local: true };
-    setUsers(prev => [optimistic, ...prev]);
-
     try {
       const created = await createUser(userData);
-      setUsers(prev => prev.map(u => u.id === tempId ? { ...created, id: tempId, _local: true } : u));
+      setUsers(prev => [created, ...prev]);
       toast.success('User created successfully');
       return true;
     } catch {
-      setUsers(prev => prev.filter(u => u.id !== tempId));
       toast.error('Something went wrong. Could not create user.');
       return false;
     }
   }, []);
 
   const editUser = useCallback(async (id, userData) => {
-    const currentUser = users.find(user => user.id === id);
-
-    if (currentUser?._local) {
-      setUsers(prev => prev.map(user => user.id === id ? { ...user, ...userData, _local: true } : user));
-      toast.success('User updated');
-      return true;
-    }
-
-    let previousUsers = null;
-    let updatedUser = null;
-
-    setUsers(prev => {
-      previousUsers = prev;
-      const currentUser = prev.find(user => user.id === id);
-      if (!currentUser) return prev;
-
-      updatedUser = { ...currentUser, ...userData };
-      return prev.map(user => user.id === id ? updatedUser : user);
-    });
-
     try {
-      const savedUser = await updateUser(id, updatedUser ?? userData);
-      setUsers(prev => prev.map(user => user.id === id ? { ...user, ...savedUser } : user));
+      const savedUser = await updateUser(id, userData);
+      setUsers(prev => prev.map(user => String(user.id) === String(id) ? savedUser : user));
       toast.success('User updated');
       return true;
     } catch (error) {
-      if (previousUsers) {
-        setUsers(previousUsers);
-      }
       toast.error(error?.response?.data?.message || 'Something went wrong. Could not update user.');
       return false;
     }
-  }, [users]);
+  }, []);
 
   const removeUser = useCallback(async (id) => {
-    const currentUser = users.find(user => user.id === id);
-
-    if (currentUser?._local) {
-      setUsers(prev => prev.filter(user => user.id !== id));
-      toast.success('User deleted');
-      return true;
-    }
-
-    let previousUsers = null;
-    setUsers(prev => {
-      previousUsers = prev;
-      return prev.filter(u => u.id !== id);
-    });
-
     try {
       await deleteUser(id);
+      setUsers(prev => prev.filter(user => String(user.id) !== String(id)));
       toast.success('User deleted');
       return true;
     } catch {
-      if (previousUsers) {
-        setUsers(previousUsers);
-      }
       toast.error('Something went wrong. Could not delete user.');
       return false;
     }
-  }, [users]);
+  }, []);
 
   return {
     users,
